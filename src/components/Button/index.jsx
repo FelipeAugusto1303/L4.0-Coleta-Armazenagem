@@ -1,13 +1,15 @@
 import { styled } from 'styled-components'
+import { colorpalette } from '../../commons/colors'
 
 export const Button = styled.button`
     height: 100px;
     width: 400px;
-    background: ${(props) => (props.color === 'primary' ? '#4424D6' : '#347C98')};
+    background: ${(props) =>
+      props.color === 'primary' ? colorpalette.primary : colorpalette.secondary};
     border-radius: 8px;
     box-shadow: 0;
     border: 0;
-    color: #fff;
+    color: ${colorpalette.common.white};
     font-size: 30px;
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
