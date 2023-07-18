@@ -1,5 +1,5 @@
 import { styled } from 'styled-components'
-import { colorpalette } from '../../commons/colors'
+import { colorpalette } from '../../Commons/colors'
 
 export const HomeButton = styled.button`
     display: flex;

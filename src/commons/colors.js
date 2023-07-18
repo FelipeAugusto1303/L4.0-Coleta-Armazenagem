@@ -5,4 +5,8 @@ export const colorpalette = {
     white: '#fff',
     black: '#000',
   },
+  card: '#b9b7bd',
+  hover: {
+    card: '#868b8e',
+  },
 }
