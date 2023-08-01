@@ -27,7 +27,6 @@ function Collect() {
   }
 
   const handleCloseDialog = () => {
-    setOpenFinalDialog(true)
     setOpenDialog(false)
   }
 
@@ -37,7 +36,6 @@ function Collect() {
   const handleOpenRFIDModal = (id) => {
     setSelectId(id)
     setOpenRFID(true)
-
   }
 
   return (
@@ -60,11 +58,24 @@ function Collect() {
               return new Date(a.time) - new Date(b.time)
             })
             .map((card) => {
-              return <CollectCard key={card.id} request={card} onClick={() => handleOpenRFIDModal(card.id)} />
+              return (
+                <CollectCard
+                  key={card.id}
+                  request={card}
+                  onClick={() => handleOpenRFIDModal(card.id)}
+                />
+              )
             })}
         </CardContainer>
       </div>
-      <RFIDModal open={openRFID} close={setOpenRFID} id={selectId} value={rfidValue} handleChange={setRfidValue} handleNext={handleOpenDialog}/>
+      <RFIDModal
+        open={openRFID}
+        close={setOpenRFID}
+        id={selectId}
+        value={rfidValue}
+        handleChange={setRfidValue}
+        handleNext={handleOpenDialog}
+      />
       <ConfirmationDialog open={openDialog} handleClose={handleCloseDialog} />
       <FinishDialog open={openFinalDialog} handleClose={handleCloseFinalDialog} />
     </div>
