@@ -47,7 +47,10 @@ function RFIDModal({ open, close, handleNext, id }) {
             }}
             variant='contained'
             disabled={value === null || value === ''}
-            onClick={() => handleNext(value)}
+            onClick={() => {
+              handleNext(value)
+              setValue(null)
+            }}
           >
             Confirmar Coleta
           </Button>

@@ -21,7 +21,6 @@ function Collect() {
   const navigate = useNavigate()
 
   const handleOpenDialog = (rfidValue) => {
-    console.log(rfidValue)
     setOpenDialog(true)
     setOpenRFID(false)
   }
@@ -36,6 +35,12 @@ function Collect() {
   const handleOpenRFIDModal = (id) => {
     setSelectId(id)
     setOpenRFID(true)
+  }
+
+  const handleFinishCollect = () => {
+    setOpenFinalDialog(false)
+    setOpenDialog(false)
+    setRfidValue(null)
   }
 
   return (
@@ -76,8 +81,16 @@ function Collect() {
         handleChange={setRfidValue}
         handleNext={handleOpenDialog}
       />
-      <ConfirmationDialog open={openDialog} handleClose={handleCloseDialog} />
-      <FinishDialog open={openFinalDialog} handleClose={handleCloseFinalDialog} />
+      <ConfirmationDialog
+        open={openDialog}
+        handleClose={handleCloseDialog}
+        handleNext={handleOpenFinalDialog}
+      />
+      <FinishDialog
+        open={openFinalDialog}
+        handleClose={handleCloseFinalDialog}
+        handleFinish={handleFinishCollect}
+      />
     </div>
   )
 }

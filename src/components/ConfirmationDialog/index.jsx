@@ -6,7 +6,7 @@ import './styles.css'
 import { Text } from '../Text'
 import { Button, Box } from '@mui/material'
 
-function ConfirmationDialog({ open, handleClose }) {
+function ConfirmationDialog({ open, handleClose, handleNext }) {
   return (
     <CustomModal open={open}>
       <Box component='div' sx={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
@@ -36,6 +36,7 @@ function ConfirmationDialog({ open, handleClose }) {
               fontSize: '18px',
             }}
             variant='contained'
+            onClick={handleNext}
           >
             Confirmar Entrega
           </Button>
