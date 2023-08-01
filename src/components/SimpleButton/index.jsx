@@ -1,5 +1,5 @@
 import { styled } from 'styled-components'
-import { colorpalette } from '../../Commons/colors'
+import { colorpalette } from '../../commons/colors'
 
 export const FilledButton = styled.button`
     height: 70px;

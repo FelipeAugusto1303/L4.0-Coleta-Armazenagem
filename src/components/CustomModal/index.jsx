@@ -4,7 +4,6 @@ import React from 'react'
 // import { Container } from './styles';
 
 function CustomModal({ open, handleClose, ...props }) {
-  console.log(props)
   const styles = {
     position: 'absolute',
     top: '50%',
