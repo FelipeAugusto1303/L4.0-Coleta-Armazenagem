@@ -1,22 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import CustomModal from '../CustomModal'
 import { TextField, Box, Button, Typography } from '@mui/material'
 
-function RFIDModal({ open, close, handleNext, id }) {
+function StorageConfirmationModal({ open, close, handleBack, rfid, storageId }) {
   const [value, setValue] = useState(null)
-  const inputRef = useRef()
-
-  const setFocus = (event) => {
-    inputRef.current.focus()
-  }
-
-  useEffect(() => {
-    setTimeout(() => setFocus(), 200)
-  }, [open])
 
   const handleClose = () => {
     setValue(null)
     close(false)
+    window.location.reload()
   }
 
   return (
@@ -25,22 +17,11 @@ function RFIDModal({ open, close, handleNext, id }) {
         component='div'
         sx={{ display: 'flex', flexDirection: 'column', padding: '12px', gap: '30px' }}
       >
-        {id ? (
-          <Typography variant='h4'>Posto de Coleta {id}</Typography>
-        ) : (
-          <Typography variant='h4'>Leitura do RFID</Typography>
-        )}
-        {open ? (
-          <TextField
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            variant='outlined'
-            inputRef={inputRef}
-            sx={{ width: '100%' }}
-          />
-        ) : (
-          <TextField />
-        )}
+        <Typography variant='h4'>Confirmar Armazenagem</Typography>
+
+        <Typography variant='h6'>RFID: {rfid ? rfid : null}</Typography>
+        <Typography variant='h6'>Local: {storageId ? storageId : null}</Typography>
+
         <Box component='div' sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Button
             sx={{
@@ -51,7 +32,7 @@ function RFIDModal({ open, close, handleNext, id }) {
             }}
             variant='outlined'
             color='error'
-            onClick={handleClose}
+            onClick={handleBack}
           >
             Cancelar
           </Button>
@@ -63,13 +44,9 @@ function RFIDModal({ open, close, handleNext, id }) {
               fontSize: '18px',
             }}
             variant='contained'
-            disabled={value === null || value === ''}
-            onClick={() => {
-              handleNext(value)
-              setValue(null)
-            }}
+            onClick={handleClose}
           >
-            Confirmar Coleta
+            Concluir
           </Button>
         </Box>
       </Box>
@@ -77,4 +54,4 @@ function RFIDModal({ open, close, handleNext, id }) {
   )
 }
 
-export default RFIDModal
+export default StorageConfirmationModal

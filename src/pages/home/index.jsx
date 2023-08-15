@@ -18,7 +18,7 @@ function Home() {
       </MainTitleContainer>
 
       <ButtonContainer>
-        <Button color='primary' onClick={() => console.log('go to Storage')}>
+        <Button color='primary' onClick={() => navigate('/storage')}>
           <StorageIcon fontSize='large' />
           Armazenamento
         </Button>

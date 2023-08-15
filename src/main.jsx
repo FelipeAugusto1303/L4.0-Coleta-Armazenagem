@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
 import Home from './pages/home/index.jsx'
 import Collect from './pages/collect'
+import Storage from './pages/storage'
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: '/collect',
     element: <Collect />,
+  },
+  {
+    path: '/storage',
+    element: <Storage />,
   },
 ])
 

@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import CustomModal from '../CustomModal'
 import { TextField, Box, Button, Typography } from '@mui/material'
 
-function RFIDModal({ open, close, handleNext, id }) {
+function StorageModal({ open, close, handleNext }) {
   const [value, setValue] = useState(null)
   const inputRef = useRef()
 
@@ -25,22 +25,15 @@ function RFIDModal({ open, close, handleNext, id }) {
         component='div'
         sx={{ display: 'flex', flexDirection: 'column', padding: '12px', gap: '30px' }}
       >
-        {id ? (
-          <Typography variant='h4'>Posto de Coleta {id}</Typography>
-        ) : (
-          <Typography variant='h4'>Leitura do RFID</Typography>
-        )}
-        {open ? (
-          <TextField
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            variant='outlined'
-            inputRef={inputRef}
-            sx={{ width: '100%' }}
-          />
-        ) : (
-          <TextField />
-        )}
+        <Typography variant='h4'>Endereço de Armazenamento</Typography>
+
+        <TextField
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          variant='outlined'
+          inputRef={inputRef}
+          sx={{ width: '100%' }}
+        />
         <Box component='div' sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Button
             sx={{
@@ -69,7 +62,7 @@ function RFIDModal({ open, close, handleNext, id }) {
               setValue(null)
             }}
           >
-            Confirmar Coleta
+            Continuar
           </Button>
         </Box>
       </Box>
@@ -77,4 +70,4 @@ function RFIDModal({ open, close, handleNext, id }) {
   )
 }
 
-export default RFIDModal
+export default StorageModal
