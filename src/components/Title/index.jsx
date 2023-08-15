@@ -1,7 +1,6 @@
 import { styled } from 'styled-components'
 
 export const Title = (props) => {
-  console.log('variant', props.variant)
   switch (props.variant) {
     case 'h1':
       return <H1>{props.children}</H1>

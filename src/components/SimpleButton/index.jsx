@@ -41,7 +41,6 @@ const OutlinedButton = styled.button`
 `
 
 export const SimpleButton = ({ variant, color, onClick }) => {
-  console.log('=====>', variant, color)
   if (variant === 'filled') {
     return <FilledButton color={color} onClick={onClick} />
   } else {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { styled } from 'styled-components'
 import './styles.css'
+import format from 'date-fns/format'
 
 export const CardContainer = styled.div`
     width: 100%;
@@ -10,15 +11,14 @@ export const CardContainer = styled.div`
 
 `
 function CollectCard({ request, onClick }) {
-  console.log(request)
   return (
     <div id='card-container' onClick={onClick}>
       <div>
-        <p>posto de coleta {request.id}</p>
+        <p>posto de coleta {request.collectionPointId}</p>
       </div>
       <div id='request-time'>
         <p>horário da solicitação</p>
-        <p> {request.time}</p>
+        <p> {format(new Date(request.createdAt), 'dd/MM/yyyy - kk:mm:ss')}</p>
       </div>
     </div>
   )

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import api from '../../services/api'
 
 import './styles.css'
 import { Title } from '../../components/Title'
@@ -16,11 +17,16 @@ function Collect() {
   const [openDialog, setOpenDialog] = useState(false)
   const [openFinalDialog, setOpenFinalDialog] = useState(false)
   const [openRFID, setOpenRFID] = useState(false)
+  const [objectId, setObjectId] = useState(null)
   const [selectId, setSelectId] = useState(null)
   const [rfidValue, setRfidValue] = useState(null)
+  const [data, setData] = useState(null)
+  const [rfidData, setRfidData] = useState(null)
+
   const navigate = useNavigate()
 
   const handleOpenDialog = (rfidValue) => {
+    setRfidData(rfidValue)
     setOpenDialog(true)
     setOpenRFID(false)
   }
@@ -32,16 +38,42 @@ function Collect() {
   const handleOpenFinalDialog = () => setOpenFinalDialog(true)
   const handleCloseFinalDialog = () => setOpenFinalDialog(false)
 
-  const handleOpenRFIDModal = (id) => {
-    setSelectId(id)
+  const handleOpenRFIDModal = (id, pointId) => {
+    setSelectId(pointId)
+    setObjectId(id)
     setOpenRFID(true)
   }
 
   const handleFinishCollect = () => {
+    api.patch(`/collection-request/${objectId}`, {
+      status: 'PICKING_AREA',
+      rfid_code: rfidData,
+    })
     setOpenFinalDialog(false)
     setOpenDialog(false)
     setRfidValue(null)
   }
+
+  useEffect(() => {
+    api
+      .get('/collection-request')
+      .then((response) => {
+        setData(response.data)
+      })
+      .catch((err) => console.log(err))
+  }, [])
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      api
+        .get('/collection-request')
+        .then((response) => {
+          setData(response.data)
+        })
+        .catch((err) => console.log(err))
+    }, 3000)
+    return () => clearInterval(timer)
+  }, [data])
 
   return (
     <div id='collect-container'>
@@ -58,19 +90,21 @@ function Collect() {
       </div>
       <div id='collect-table'>
         <CardContainer>
-          {cards
-            .sort(function (a, b) {
-              return new Date(a.time) - new Date(b.time)
-            })
-            .map((card) => {
-              return (
-                <CollectCard
-                  key={card.id}
-                  request={card}
-                  onClick={() => handleOpenRFIDModal(card.id)}
-                />
-              )
-            })}
+          {data &&
+            data
+              .filter((d) => d.status === 'CREATED')
+              .sort(function (a, b) {
+                return new Date(a.createdAt) - new Date(b.createdAt)
+              })
+              .map((card) => {
+                return (
+                  <CollectCard
+                    key={card.id}
+                    request={card}
+                    onClick={() => handleOpenRFIDModal(card.id, card.collectionPointId)}
+                  />
+                )
+              })}
         </CardContainer>
       </div>
       <RFIDModal
