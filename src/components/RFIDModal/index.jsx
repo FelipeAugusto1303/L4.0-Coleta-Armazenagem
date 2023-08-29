@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
 import CustomModal from '../CustomModal'
 import { TextField, Box, Button, Typography } from '@mui/material'
+import { rfidApi } from '../../services/api'
 
 function RFIDModal({ open, close, handleNext, id }) {
   const [value, setValue] = useState(null)
+  const [flag, setFlag] = useState(true)
   const inputRef = useRef()
 
   const setFocus = (event) => {
@@ -13,6 +15,26 @@ function RFIDModal({ open, close, handleNext, id }) {
   useEffect(() => {
     setTimeout(() => setFocus(), 200)
   }, [open])
+
+  useEffect(() => {
+    if (open && (value === null || value === '')) {
+      const timer = setInterval(() => {
+        rfidApi
+          .get('/getTagSDCard')
+          .then((response) => {
+            if (response.data.data.length === 0) {
+              console.log('array vazio, lendo novamente!!!!')
+              setFlag((prev) => !prev)
+            } else {
+              console.log(response.data.data[0].reading_epc_hex)
+              setValue(response.data.data[0].reading_epc_hex)
+            }
+          })
+          .catch((err) => console.log(err))
+      }, 1000)
+      return () => clearInterval(timer)
+    }
+  }, [open, flag])
 
   const handleClose = () => {
     setValue(null)
